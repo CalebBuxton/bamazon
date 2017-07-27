@@ -1,5 +1,5 @@
 DROP DATABASE IF EXISTS bamazon;
-CREATE DATEBASE bamazon;
+CREATE DATABASE bamazon;
 
 USE bamazon;
 
@@ -18,7 +18,7 @@ VALUES
 ('Organic Dog Food - 18lb Bag', 'Pet Supplies', 35.12, 19),
 ('RGB Backlit LED Mechcanical Keyboard', 'Electronics', 125.18, 4),
 ('5 Piece Stainless Steel Pan Set', 'Home Goods', 216.74, 64),
-('Faux 10 Foot Christmas Tree - REAL TREE FEEL', 'Home Goods', 119.99,),
+('Faux 10 Foot Christmas Tree - REAL TREE FEEL', 'Home Goods', 119.99, 0),
 ('Animal Energy - 6PK - 12oz - Eagles Rally', 'Food and Beverage', 16.54, 42),
 ('Glow-in-the-Dark Cat Collar with Bell', 'Pet Supplies', 11.50, 16),
 ('Indoor Misquito Eliminator XL', 'Home Goods', 45.84, 64),
