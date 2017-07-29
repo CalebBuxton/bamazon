@@ -1,5 +1,8 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+require('console.table');
+
+var items = []
 
 var connection = mysql.createConnection({
   host: "localhost",
@@ -15,14 +18,13 @@ connection.connect(function(error) {
 });
 
 function runApp(){
+  items = [];
   connection.query("SELECT item_id, product_name, price FROM products", function(error, data) {
     if (error) throw error
-      console.log('ITEM ID  |  PRODUCT NAME  |  PRICE');
-      console.log('===================================')
       for(var i = 0; i < data.length; i++){
-        console.log(data[i].item_id +' | ' + data[i].product_name + ' | ' + data[i].price);
+        items.push(new newItem(data[i].item_id, data[i].product_name, data[i].price));
       }
-
+      console.table("ALL ITEMS", items)
       inquirer.prompt([{
         name: "id",
         message: 'Which Item ID Would You Like?'
@@ -43,12 +45,14 @@ function runApp(){
                   if (error) throw error;
                   var price = price[0].price;
                   var total = (price * answers.quantity).toFixed(2);
-                  console.log("Your Order Total is: $" + total)    
+                  console.log("Your Order Total is: $" + total)
+                  newOrder();    
                 })
                 
               }
               else {
                 console.log("Nope, dont have that here")
+                newOrder();
               }
         })
 
@@ -56,6 +60,24 @@ function runApp(){
   })
 }
 
+function newItem(id, name, price) {
+    this.ITEM_ID = id;
+    this.PRODUCT_NAME = name;
+    this.PRICE = price;
+}
 
-//update sql db
-//show customer total cost of their order
+function newOrder() {
+  inquirer.prompt({
+    name: "new",
+    message: "Would you like to place another order (Y/N)?"
+  })
+  .then(function(answer){
+    if (answer.new.toUpperCase() === "Y") {
+      runApp();
+    }
+    else {
+      console.log("Thank you for using Bamazon!");
+      process.exit();
+    }
+  })
+}
